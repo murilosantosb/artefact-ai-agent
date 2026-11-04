@@ -30,8 +30,8 @@ def ingest_pdf():
             )
 
     chunks = RecursiveCharacterTextSplitter(
-        chunk_size=900,
-        chunk_overlap=150    
+        chunk_size=1000,
+        chunk_overlap=200    
     )
 
     splitter = chunks.split_documents(documents)
