@@ -1,5 +1,5 @@
 from langchain_core.tools import tool
-from database.db import get_connection
+from src.database.db import get_connection
 
 @tool
 def search_products(

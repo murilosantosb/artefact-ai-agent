@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 
-from db import get_connection
+from src.database.db import get_connection
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 

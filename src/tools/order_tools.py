@@ -1,5 +1,5 @@
 from langchain_core.tools import tool
-from database.db import get_connection
+from src.database.db import get_connection
 
 @tool
 def get_order_status(order_id: int, email: str) -> str:
