@@ -1,19 +1,42 @@
-from database.db import get_connection
+from src.agent.graph import agent
+
 
 def main():
-    with get_connection() as conn:
-        cursor = conn.execute("""
-            SELECT name, price_brl, stock_quantity
-            FROM products
-            WHERE price_brl <= 1000
-                AND stock_quantity > 0
-                AND status = 'active'
-               ORDER BY price_brl ASC    
-    """)
-    products = cursor.fetchall()
+    print("=== Emporio da Musica AI Assistant ===")
+    print("Type 'exit' to quit.\n")
+    
+    config = {
+        "configurable": {
+            "thread_id": "customer-session-1"
+        }
+    }
+    
+    while True:
+        user_message = input("You: ").strip()
+        
+        if user_message.lower() in ("exit", "quit", "sair"):
+            print("Goodbye!")
+            break
+        
+        if not user_message:
+            continue
+        
+        try:
+            result = agent.invoke(
+                {
+                    "messages": [
+                        {"role": "user", "content": user_message}
+                    ]
+                },
+                config=config
+            )
 
-    for name, price, stock in products:
-        print(f"{name} - R$ {price:.2f} - Estoque: {stock}")
+            response = result["messages"][-1].content 
+            
+            print(f"\nAssistant: {response}\n")
+            
+        except Exception as error:
+            print(f"\nError: {error}\n")
 
 if __name__ == "__main__":
     main()
